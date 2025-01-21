@@ -60,11 +60,8 @@ public class DocumentController {
             String extractedText = documentService.processFile(file);
 
             SummaryStyle style = SummaryStyle.valueOf(summaryType.toUpperCase());
-            System.out.println("Summary Style: " + style);
             String summary = TextSummarizeService.getSummary(extractedText, style);
-            System.out.println("Summary: " + summary);
             summary = formatSummary(summary);
-            System.out.println("Formatted Summary: " + summary);
 
             model.addAttribute("content", summary);
             model.addAttribute("fileName", fileName);
