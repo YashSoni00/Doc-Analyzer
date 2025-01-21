@@ -12,7 +12,6 @@ import java.net.http.HttpResponse;
 @Service
 public class TextSummarizeService {
     private static final String API_URL = "https://api.openai.com/v1/chat/completions"; // OpenAI API endpoint
-    private static String API_KEY;
 
     public static String getSummary(String text, SummaryStyle style) throws IOException, InterruptedException {
         // Prepare the request payload
@@ -48,8 +47,6 @@ public class TextSummarizeService {
         // Send the request and get the response
         HttpClient client = HttpClient.newHttpClient();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        System.out.println(System.getenv("OPENAI_API_KEY"));
 
         // Check if the response is successful
         if (response.statusCode() == 200) {
