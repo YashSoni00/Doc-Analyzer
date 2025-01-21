@@ -21,8 +21,11 @@ import java.nio.file.Paths;
 @RequestMapping
 public class DocumentController {
 
-    @Autowired
-    private DocumentService documentService;
+    private final DocumentService documentService;
+
+    public DocumentController(DocumentService documentService) {
+        this.documentService = documentService;
+    }
 
     @GetMapping("/")
     public String showHomePage() {
