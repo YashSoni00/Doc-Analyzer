@@ -70,7 +70,7 @@ public class DocumentController {
             model.addAttribute("fileName", fileName);
 
             // Delete the uploaded file after processing
-            Files.delete(filePath);
+//            Files.delete(filePath);
 
             return "result";
 
