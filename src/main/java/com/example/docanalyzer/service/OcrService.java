@@ -21,7 +21,7 @@ public class OcrService {
         // Initialize Tesseract
         tesseract = new Tesseract();
         // Set the path to your Tesseract data directory
-        tesseract.setDatapath("TESSERACT_ENDPOINT");
+        tesseract.setDatapath(System.getenv("TESSERACT_ENDPOINT"));
         // Set language
         tesseract.setLanguage("eng");
     }
