@@ -1,5 +1,6 @@
 package com.example.docanalyzer.service;
 
+import com.asprise.ocr.Ocr;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -9,21 +10,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Service
 public class OcrService {
-    private final Tesseract tesseract;
+    Ocr ocr;
 
     public OcrService() {
-        // Initialize Tesseract
-        tesseract = new Tesseract();
-        // Set the path to your Tesseract data directory
-        tesseract.setDatapath("C:/Program Files/Tesseract-OCR/tessdata");
-        // Set language
-        tesseract.setLanguage("eng");
+        Ocr.setUp();
+        ocr = new Ocr();
+        ocr.startEngine("eng", Ocr.SPEED_FASTEST);
     }
 
     public String extractTextFromPdf(MultipartFile file) throws IOException, TesseractException {
@@ -45,7 +44,10 @@ public class OcrService {
                 ImageIO.write(image, "png", tempImagePath.toFile());
 
                 // Perform OCR on the image
-                String pageText = tesseract.doOCR(tempImagePath.toFile());
+                String pageText = ocr.recognize(
+                        new File[] {new File(String.valueOf(tempImagePath))},
+                        Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT
+                );
                 extractedText.append(pageText).append("\n");
 
                 // Clean up temporary image file

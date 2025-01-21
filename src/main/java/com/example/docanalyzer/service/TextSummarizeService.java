@@ -60,7 +60,8 @@ public class TextSummarizeService {
 
     // Escape the input text for use in JSON format
     private static String escapeJsonString(String text) {
-        return text.replace("\"", "\\\"")
+        return text.replace("\\", " ")
+                .replace("\"", "\\\"")
                 .replace("\n", "\\n")
                 .replace("\r", "\\r")
                 .replace("\t", "\\t");
