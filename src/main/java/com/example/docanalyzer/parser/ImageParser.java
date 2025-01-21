@@ -13,7 +13,7 @@ import java.io.InputStream;
 public class ImageParser {
     public static String parse(MultipartFile file) {
         ITesseract tesseract = new Tesseract();
-        tesseract.setDatapath("C:/Program Files/Tesseract-OCR/tessdata"); // Set Tesseract-OCR directory
+        tesseract.setDatapath(System.getenv("TESSERACT_ENDPOINT")); // Set Tesseract-OCR directory
         tesseract.setLanguage("eng"); // Set language to English
 
         String extractedText = "";
