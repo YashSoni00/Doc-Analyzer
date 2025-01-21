@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+    <parsers>
+        <parser class="org.apache.tika.parser.ocr.TesseractOCRParser">
+            <parser class="org.apache.tika.parser.pdf.PDFParser" />
+        </parser>
+    </parsers>
+    <properties>
+        <property name="tika.config.ocr.TesseractOCRParser">
+            <property name="tesseractPath">/usr/bin/tesseract</property> <!-- Update with the path to Tesseract -->
+            <property name="language">eng</property>
+        </property>
+    </properties>
+</properties>

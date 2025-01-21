@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload Document - Summary Assistant</title>
+    <link rel="stylesheet" th:href="@{/css/upload-form.css}">
+</head>
+<body>
+<div class="upload-container">
+    <div class="header">
+        <h1>Upload Your Document</h1>
+        <p>Select a file to generate its summary</p>
+    </div>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="file-drop-zone" onclick="document.getElementById('fileInput').click()">
+            <p id="dropText">Click or drag and drop your file here</p>
+            <input type="file" id="fileInput" name="file" class="file-input"
+                   accept=".pdf,.doc,.docx,.txt, .jpg, .jpeg, .png" required/>
+        </div>
+
+        <div class="summary-type-container">
+            <p class="summary-type-title">Choose Summary Type:</p>
+            <div class="summary-type-options">
+                <div class="summary-type-option">
+                    <input type="radio" id="concise" name="summaryType" value="CONCISE" required>
+                    <label for="concise">Concise</label>
+                </div>
+                <div class="summary-type-option">
+                    <input type="radio" id="balanced" name="summaryType" value="BALANCED" checked>
+                    <label for="balanced">Balanced</label>
+                </div>
+                <div class="summary-type-option">
+                    <input type="radio" id="detailed" name="summaryType" value="DETAILED">
+                    <label for="detailed">Detailed</label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-button">Process Document</button>
+    </form>
+
+    <a href="/" class="back-link">← Back to Home</a>
+</div>
+
+<script>
+    const dropZone = document.querySelector('.file-drop-zone');
+    const fileInput = document.getElementById('fileInput');
+    const dropText = document.getElementById('dropText');
+
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#2980b9';
+        dropZone.style.backgroundColor = 'rgba(52, 152, 219, 0.05)';
+    });
+
+    dropZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#3498db';
+        dropZone.style.backgroundColor = 'transparent';
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        fileInput.files = e.dataTransfer.files;
+        updateDropZoneText();
+    });
+
+    fileInput.addEventListener('change', updateDropZoneText);
+
+    function updateDropZoneText() {
+        const fileName = fileInput.files[0]?.name;
+        dropText.textContent = fileName
+            ? `Selected file: ${fileName}`
+            : 'Click or drag and drop your file here';
+    }
+</script>
+</body>
+</html>

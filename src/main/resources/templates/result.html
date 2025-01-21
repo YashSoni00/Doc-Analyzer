@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Document Summary Result</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/result.css}" />
+</head>
+<body>
+<div class="result-container">
+    <div class="header">
+        <h1>Document Summary</h1>
+    </div>
+
+    <div class="file-info">
+        <strong>File processed:</strong> <span th:text="${fileName}">document.pdf</span>
+    </div>
+
+    <div class="content">
+        <p th:utext="${content}"></p>
+    </div>
+
+    <div class="button-container">
+        <a href="/upload-form" class="button primary-button">Process Another Document</a>
+        <a href="/" class="button secondary-button">Back to Home</a>
+    </div>
+</div>
+</body>
+</html>

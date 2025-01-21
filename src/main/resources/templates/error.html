@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error - Document Summary Assistant</title>
+    <link rel="stylesheet" th:href="@{/css/error.css}">
+</head>
+<body>
+<div class="error-container">
+    <div class="error-icon">⚠️</div>
+    <h1 class="error-title">Oops! Something went wrong</h1>
+    <p class="error-message" th:text="${error}">An error occurred while processing your request.</p>
+
+    <div class="button-container">
+        <a href="/upload-form" class="button primary-button">Try Again</a>
+        <a href="/" class="button secondary-button">Back to Home</a>
+    </div>
+</div>
+</body>
+</html>
