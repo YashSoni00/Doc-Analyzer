@@ -7,7 +7,7 @@
 ## Features
 
 - **Document Parsing:** Supports PDF, Word documents, and images for text extraction.
-- **Optical Character Recognition (OCR):** Extracts text from images using Tesseract OCR.
+- **Optical Character Recognition (OCR):** Extracts text from images using Asprise OCR.
 - **Text Summarization:** Provides smart and concise summaries of extracted text.
 - **Web Interface:** A user-friendly interface built with Thymeleaf.
 - **Real-time Processing:** Quickly extracts and summarizes text for instant results.
@@ -22,7 +22,7 @@
 - **Apache POI** (For handling Word documents)
 - **Apache PDFBox** (For handling PDF documents)
 - **Apache Tika** (For content detection and text extraction)
-- **Tess4J** (For OCR functionality)
+- **Asprise OCR** (For OCR functionality)
 
 ### Frontend:
 - **Thymeleaf** (For dynamic HTML rendering)
@@ -38,7 +38,6 @@
 Ensure the following are installed on your system:
 - Java 17
 - Maven 3.8+  
-- Tesseract OCR (Installable via [Tesseract GitHub](https://github.com/tesseract-ocr/tesseract))
 
 ---
 
@@ -56,15 +55,12 @@ Ensure the following are installed on your system:
    mvn clean install
    ```
 
-3. **Configure Tesseract OCR:**
-   Ensure Tesseract is installed and configured in your system. Set the `TESSDATA_PREFIX` environment variable.
-
-4. **Run the application:**
+3. **Run the application:**
    ```bash
    mvn spring-boot:run
    ```
 
-5. **Access the application:**
+4. **Access the application:**
    Open your browser and go to:
    ```
    http://localhost:8080
@@ -75,7 +71,9 @@ Ensure the following are installed on your system:
 ## Usage
 
 1. Upload a document or image through the web interface.
-2. The application processes the input using OCR and document parsers.
+2. The application detects the input type.
+   1. If the input is text or pdf, it parses the document.
+   2. If input is image, it extracts text using OCR and document parsers.
 3. View the extracted text and its summarized version on the result page.
 
 ---
@@ -89,7 +87,7 @@ The following dependencies are used in this project:
 - **Apache POI:** For handling Word documents.
 - **Apache PDFBox:** For processing PDF files.
 - **Apache Tika:** For text extraction and content detection.
-- **Tess4J:** For OCR capabilities.
+- **Asprise OCR:** For OCR capabilities.
 - **Lombok:** For reducing boilerplate code.
 - **JUnit:** For writing unit tests.
 
@@ -109,11 +107,8 @@ DocumentSummaryAssistant/
 │   │   │               │   └── DocumentController.java
 │   │   │               ├── error/
 │   │   │               │   └── ErrorPages.java
-│   │   │               ├── service/
-│   │   │               │   ├── DocumentService.java
-│   │   │               │   ├── TextSummarizeService.java
-│   │   │               │   ├── TikaService.java
-│   │   │               │   └── OcrService.java
+│   │   │               ├── exception/
+│   │   │               │   └── UnsupportedFile.java
 │   │   │               ├── model/
 │   │   │               │   ├── DocumentSummary.java
 │   │   │               │   └── SummaryStyle.java
@@ -121,9 +116,12 @@ DocumentSummaryAssistant/
 │   │   │               │   ├── ImageParser.java
 │   │   │               │   ├── PdfParser.java
 │   │   │               │   └── TextParser.java
-│   │   │               ├── exception/
-│   │   │               │   └── UnsupportedFile.java
-│   │   │               └── DocumentSummaryAssistantApplication.java
+│   │   │               ├── service/
+│   │   │               │   ├── DocumentService.java
+│   │   │               │   ├── OcrService.java
+│   │   │               │   ├── TextSummarizeService.java
+│   │   │               │   └── TikaService.java
+│   │   │               └── DocAnalyzerApplication.java
 │   │   └── resources/
 │   │   │   ├── static/          # For static files like HTML, CSS, JS if using 
 │   │   │       ├── css
@@ -140,15 +138,21 @@ DocumentSummaryAssistant/
 │   │   │       └── upload-form.html
 │   │   │   ├── application.properties
 │   │   │   └── tika-config.xml/        # Tika Configuration File
-│   ├── test/
-│   │   ├── java/
-│   │   │   └── com/
-│   │   │       └── example/
-│   │   │           └── documentsummaryassistant/
-│   │   │               └── service/
-│   │   │                   ├── DocumentServiceTest.java
-│   │   │                   ├── DocumentSummaryAssistantApplicationTests.java
-│   │   │                   └── SummarizationServiceTest.java
+│   └── test/
+│       ├── java/
+│       │   └── com/
+│       │       └── example/
+│       │           └── documentsummaryassistant/
+│       │               └── service/
+│       │                   ├── DocAnalyzerApplicationTests.java
+│       │                   ├── DocumentServiceTest.java
+│       │                   └── TextSummarizationServiceTest.java
+│       └── resources/
+│           └── test-files/
+│               ├── sampleAudio.mp4
+│               ├── sampleImage.jpg
+│               ├── samplePdf.pdf
+│               └── sampleTest.txt
 ├── .gitignore
 ├── .uploads # Directory to temporarily store uploaded files
 ├── pom.xml
