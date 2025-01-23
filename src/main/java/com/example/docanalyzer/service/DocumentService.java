@@ -18,7 +18,7 @@ public class DocumentService {
 
     public String processFile(MultipartFile file) throws IOException {
         // Your logic to process the file and extract text.
-        String extractedText = "";
+        String extractedText;
         String fileType = tikaService.detectFileType(file);
         if (fileType.contains("pdf")) {
             System.out.println("Processing PDF file");
@@ -40,7 +40,7 @@ public class DocumentService {
 
     public String forTest(MultipartFile file) throws IOException {
         String fileType = tikaService.detectFileType(file);
-        String result = "";
+        String result;
         if (fileType.contains("pdf")) {
             result = "PDF file.";
         } else if (fileType.contains("image")) {

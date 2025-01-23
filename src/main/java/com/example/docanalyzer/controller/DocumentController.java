@@ -3,7 +3,6 @@ package com.example.docanalyzer.controller;
 import com.example.docanalyzer.model.SummaryStyle;
 import com.example.docanalyzer.service.DocumentService;
 import com.example.docanalyzer.service.TextSummarizeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,7 +69,7 @@ public class DocumentController {
             model.addAttribute("fileName", fileName);
 
             // Delete the uploaded file after processing
-//            Files.delete(filePath);
+            Files.delete(filePath);
 
             return "result";
 

@@ -79,7 +79,7 @@ public class TextSummarizeService {
         return "No summary found.";
     }
 
-    public static String forTest(String text, SummaryStyle style) throws IOException, InterruptedException {
+    public static String forTest(String text, SummaryStyle style) {
         return switch (style) {
             case CONCISE -> "Concise Summary";
             case BALANCED -> "Balanced Summary";

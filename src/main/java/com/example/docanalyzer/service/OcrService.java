@@ -28,34 +28,34 @@ public class OcrService {
         Path tempFile = Files.createTempFile("temp", ".pdf");
         file.transferTo(tempFile.toFile());
 
-        StringBuilder extractedText = new StringBuilder();
+        String extractedText = "";
 
         try (PDDocument document = PDDocument.load(tempFile.toFile())) {
             PDFRenderer pdfRenderer = new PDFRenderer(document);
 
             // Convert each page to image and perform OCR
             for (int page = 0; page < document.getNumberOfPages(); page++) {
-                BufferedImage image = pdfRenderer.renderImageWithDPI(page, 300); // 300 DPI for better quality
-
-                // Create temporary image file
-                Path tempImagePath = Files.createTempFile("page_" + page, ".png");
-                ImageIO.write(image, "png", tempImagePath.toFile());
-
-                // Perform OCR on the image
-                String pageText = ocr.recognize(
-                        new File[] {new File(String.valueOf(tempImagePath))},
-                        Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT
-                );
-                extractedText.append(pageText).append("\n");
-
-                // Clean up temporary image file
-                Files.delete(tempImagePath);
+                BufferedImage image = pdfRenderer.renderImageWithDPI(page, 600); // 600 DPI for better quality
+                extractedText = processImage(image);
             }
         } finally {
             // Clean up temporary PDF file
             Files.delete(tempFile);
         }
 
-        return extractedText.toString();
+        return extractedText;
+    }
+
+    public String processImage(BufferedImage image) throws IOException {
+        Path tempImagePath = Files.createTempFile("temp", ".png");
+        ImageIO.write(image, "png", tempImagePath.toFile());
+
+        String extractedText = ocr.recognize(
+                new File[] {new File(String.valueOf(tempImagePath))},
+                Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT
+        );
+
+        Files.delete(tempImagePath);
+        return extractedText;
     }
 }
