@@ -1,8 +1,6 @@
 package com.example.docanalyzer.service;
 
 import com.asprise.ocr.Ocr;
-import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.stereotype.Service;
@@ -25,7 +23,7 @@ public class OcrService {
         ocr.startEngine("eng", Ocr.SPEED_FASTEST);
     }
 
-    public String extractTextFromPdf(MultipartFile file) throws IOException, TesseractException {
+    public String extractTextFromPdf(MultipartFile file) throws IOException {
         // Create temporary file
         Path tempFile = Files.createTempFile("temp", ".pdf");
         file.transferTo(tempFile.toFile());

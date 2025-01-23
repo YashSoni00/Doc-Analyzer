@@ -1,7 +1,6 @@
 package com.example.docanalyzer.parser;
 
 import com.example.docanalyzer.service.OcrService;
-import net.sourceforge.tess4j.TesseractException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +24,7 @@ public class PdfParser {
             } else {
                 return "PDF is encrypted and cannot be processed.";
             }
-        } catch (IOException | TesseractException e) {
+        } catch (IOException e) {
             System.out.println("Error in extractTextPdf (TikaService): " + e.getMessage());
             throw new RuntimeException(e);
         }
